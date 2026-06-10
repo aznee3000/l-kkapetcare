@@ -10,6 +10,8 @@ export const en = {
     bookTitle: "Book pet help — Løkka Pet Care",
     becomeSitterTitle: "Become a sitter — Løkka Pet Care",
     sittersTitle: "Our sitters — Løkka Pet Care",
+    termsTitle: "Terms of service — Løkka Pet Care",
+    privacyTitle: "Privacy policy — Løkka Pet Care",
   },
   language: {
     label: "Language",
@@ -31,10 +33,17 @@ export const en = {
     forSittersTitle: "For sitters",
     becomeSitter: "Become a sitter",
     companyTitle: "Company",
-    terms: "Terms (coming soon)",
-    privacy: "Privacy (coming soon)",
+    terms: "Terms of service",
+    privacy: "Privacy policy",
     admin: "Admin",
     rights: "Grünerløkka, Oslo",
+  },
+  legal: {
+    termsTitle: "Terms of service",
+    privacyTitle: "Privacy policy",
+    intro: "Please read the document below. You can also open it in a new tab.",
+    openInNewTab: "Open the PDF in a new tab",
+    langNote: "This document is currently available in Norwegian only.",
   },
   landing: {
     badge: "🐾 Rooted in Grünerløkka — serving all of Oslo",

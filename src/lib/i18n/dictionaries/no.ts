@@ -11,6 +11,8 @@ export const no: Dictionary = {
     bookTitle: "Bestill kjæledyrhjelp — Løkka Pet Care",
     becomeSitterTitle: "Bli passer — Løkka Pet Care",
     sittersTitle: "Våre passere — Løkka Pet Care",
+    termsTitle: "Vilkår — Løkka Pet Care",
+    privacyTitle: "Personvern — Løkka Pet Care",
   },
   language: {
     label: "Språk",
@@ -32,10 +34,17 @@ export const no: Dictionary = {
     forSittersTitle: "For passere",
     becomeSitter: "Bli passer",
     companyTitle: "Selskap",
-    terms: "Vilkår (kommer snart)",
-    privacy: "Personvern (kommer snart)",
+    terms: "Vilkår",
+    privacy: "Personvern",
     admin: "Admin",
     rights: "Grünerløkka, Oslo",
+  },
+  legal: {
+    termsTitle: "Vilkår",
+    privacyTitle: "Personvern",
+    intro: "Les dokumentet under. Du kan også åpne det i en ny fane.",
+    openInNewTab: "Åpne PDF i ny fane",
+    langNote: "",
   },
   landing: {
     badge: "🐾 Forankret på Grünerløkka — for hele Oslo",

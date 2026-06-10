@@ -53,16 +53,15 @@ export default async function Footer() {
             {t.footer.companyTitle}
           </h4>
           <ul className="mt-3 space-y-2 text-sm text-gray-600">
-            {/* FUTURE: real terms & privacy pages (founder to add with legal help). */}
             <li>
-              <span className="cursor-not-allowed text-gray-400">
+              <Link href="/vilkar" className="hover:text-brand-700">
                 {t.footer.terms}
-              </span>
+              </Link>
             </li>
             <li>
-              <span className="cursor-not-allowed text-gray-400">
+              <Link href="/personvern" className="hover:text-brand-700">
                 {t.footer.privacy}
-              </span>
+              </Link>
             </li>
             <li>
               <Link href="/login" className="hover:text-brand-700">
