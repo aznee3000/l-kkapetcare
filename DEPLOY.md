@@ -48,7 +48,7 @@ for both **Production** and **Preview**:
 | `NEXT_PUBLIC_SUPABASE_URL` | your Supabase Project URL | public |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | your `anon` / public key | public |
 | `SUPABASE_SERVICE_ROLE_KEY` | your `service_role` key | mark **Sensitive**; never prefix with `NEXT_PUBLIC` |
-| `NEXT_PUBLIC_SITE_URL` | `https://løkkapetcare.no` | optional; not referenced in code today, but future-proof |
+| `NEXT_PUBLIC_SITE_URL` | `https://løkkapetcare.no` | set to the live domain; keep consistent with the Supabase Site URL (see step 5) |
 
 These are required because `.env.local` is gitignored and never deployed.
 
@@ -79,11 +79,36 @@ Trigger the first **Deploy**.
 3. Wait for DNS to propagate. Vercel automatically issues the SSL certificate
    once the records resolve.
 
-## 5. Optional: Supabase Auth URLs
+## 5. Supabase Auth settings (important)
 
-Password-based admin login needs no redirect URL configuration. If you later
-add magic links or OAuth, add `https://løkkapetcare.no` under
-**Supabase > Authentication > URL Configuration**.
+Do this so signup works and confirmation/auth emails never link to
+`localhost`.
+
+1. **Disable email confirmation** (MVP). In **Supabase > Authentication >
+   Sign In / Providers > Email**, turn **Confirm email OFF** (this sets
+   `mailer_autoconfirm: true`). New signups are then auto-confirmed and signed
+   in immediately, so no confirmation email is sent. The signup flow in
+   `src/app/signup/actions.ts` already redirects straight to `/dashboard` when a
+   session is returned. To re-verify the setting, fetch the public auth config:
+
+   ```bash
+   curl -s "$NEXT_PUBLIC_SUPABASE_URL/auth/v1/settings" \
+     -H "apikey: $NEXT_PUBLIC_SUPABASE_ANON_KEY" | grep -o '"mailer_autoconfirm":[a-z]*'
+   ```
+
+   It should report `"mailer_autoconfirm":true`.
+
+2. **Set the Site URL and redirect allow-list.** In **Supabase >
+   Authentication > URL Configuration**:
+   - **Site URL**: `https://løkkapetcare.no` (this is what auth emails use; the
+     default `http://localhost:3000` is why confirmation links pointed at
+     localhost).
+   - **Redirect URLs** (add all): `https://løkkapetcare.no/**`, your Vercel
+     domain `https://<project>.vercel.app/**`, and `http://localhost:3000/**`
+     for local development.
+
+If you later add magic links, password reset, or OAuth, these same Site URL and
+redirect entries are what make those emails/links resolve to the live site.
 
 ## 6. Post-deploy verification
 
