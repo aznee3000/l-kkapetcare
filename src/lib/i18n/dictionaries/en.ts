@@ -12,6 +12,7 @@ export const en = {
     sittersTitle: "Our sitters — Løkka Pet Care",
     termsTitle: "Terms of service — Løkka Pet Care",
     privacyTitle: "Privacy policy — Løkka Pet Care",
+    contactTitle: "Contact us — Løkka Pet Care",
   },
   language: {
     label: "Language",
@@ -35,6 +36,7 @@ export const en = {
     forSittersTitle: "For sitters",
     becomeSitter: "Become a sitter",
     companyTitle: "Company",
+    contact: "Contact",
     terms: "Terms of service",
     privacy: "Privacy policy",
     admin: "Admin",
@@ -249,6 +251,25 @@ export const en = {
     errorMessage:
       "Something went wrong saving your application. Please try again in a moment.",
   },
+  contact: {
+    pageTitle: "Contact us",
+    pageIntro:
+      "Questions, feedback or need a hand? Send us a message and we'll get back to you.",
+    name: "Name",
+    email: "Email",
+    phone: "Phone",
+    message: "Message",
+    messageHint: "Tell us how we can help.",
+    contactHint:
+      "Leave your email or phone number so we can reply.",
+    submit: "Send message",
+    submitting: "Sending…",
+    confirmTitle: "Message sent",
+    confirmFollowup: "We'll get back to you by email or phone shortly.",
+    successMessage: "Thanks for reaching out — we'll be in touch soon.",
+    errorMessage:
+      "Something went wrong sending your message. Please try again in a moment.",
+  },
   field: {
     optional: "(optional)",
   },
@@ -423,6 +444,8 @@ export const en = {
     services_min: "Select at least one service",
     consent_required: "You must accept the terms",
     photo_too_large: "File too large (max 5 MB)",
+    message_required: "Message is required",
+    contact_need_email_or_phone: "Enter an email or phone number",
   },
 };
 

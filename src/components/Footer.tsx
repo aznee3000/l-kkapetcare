@@ -54,6 +54,11 @@ export default async function Footer() {
           </h4>
           <ul className="mt-3 space-y-2 text-sm text-gray-600">
             <li>
+              <Link href="/contact" className="hover:text-brand-700">
+                {t.footer.contact}
+              </Link>
+            </li>
+            <li>
               <Link href="/vilkar" className="hover:text-brand-700">
                 {t.footer.terms}
               </Link>

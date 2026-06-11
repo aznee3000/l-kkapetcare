@@ -13,6 +13,7 @@ export const no: Dictionary = {
     sittersTitle: "Våre passere — Løkka Pet Care",
     termsTitle: "Vilkår — Løkka Pet Care",
     privacyTitle: "Personvern — Løkka Pet Care",
+    contactTitle: "Kontakt oss — Løkka Pet Care",
   },
   language: {
     label: "Språk",
@@ -36,6 +37,7 @@ export const no: Dictionary = {
     forSittersTitle: "For passere",
     becomeSitter: "Bli passer",
     companyTitle: "Selskap",
+    contact: "Kontakt",
     terms: "Vilkår",
     privacy: "Personvern",
     admin: "Admin",
@@ -254,6 +256,24 @@ export const no: Dictionary = {
     errorMessage:
       "Noe gikk galt under lagring av søknaden. Prøv igjen om litt.",
   },
+  contact: {
+    pageTitle: "Kontakt oss",
+    pageIntro:
+      "Spørsmål, tilbakemelding eller trenger du hjelp? Send oss en melding, så svarer vi deg.",
+    name: "Navn",
+    email: "E-post",
+    phone: "Telefon",
+    message: "Melding",
+    messageHint: "Fortell oss hvordan vi kan hjelpe.",
+    contactHint: "Legg igjen e-post eller telefonnummer så vi kan svare deg.",
+    submit: "Send melding",
+    submitting: "Sender…",
+    confirmTitle: "Melding sendt",
+    confirmFollowup: "Vi tar kontakt på e-post eller telefon snart.",
+    successMessage: "Takk for at du tok kontakt — vi hører fra oss snart.",
+    errorMessage:
+      "Noe gikk galt under sending av meldingen. Prøv igjen om litt.",
+  },
   field: {
     optional: "(valgfritt)",
   },
@@ -428,5 +448,7 @@ export const no: Dictionary = {
     services_min: "Velg minst én tjeneste",
     consent_required: "Du må godta vilkårene",
     photo_too_large: "Filen er for stor (maks 5 MB)",
+    message_required: "Melding er påkrevd",
+    contact_need_email_or_phone: "Skriv inn en e-post eller et telefonnummer",
   },
 };

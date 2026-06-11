@@ -19,6 +19,7 @@ async function getOverview() {
     completedBookings,
     totalSitters,
     totalBookings,
+    newContactRequests,
     recentBookings,
     recentApplications,
   ] = await Promise.all([
@@ -44,6 +45,10 @@ async function getOverview() {
       .eq("status", "approved"),
     supabase.from("booking_requests").select("*", head()),
     supabase
+      .from("contact_requests")
+      .select("*", head())
+      .eq("status", "new"),
+    supabase
       .from("booking_requests")
       .select("*")
       .order("created_at", { ascending: false })
@@ -63,6 +68,7 @@ async function getOverview() {
     completedBookings: completedBookings.count ?? 0,
     totalSitters: totalSitters.count ?? 0,
     totalBookings: totalBookings.count ?? 0,
+    newContactRequests: newContactRequests.count ?? 0,
     recentBookings: (recentBookings.data as BookingRequest[] | null) ?? [],
     recentApplications:
       (recentApplications.data as SitterProfile[] | null) ?? [],
@@ -110,6 +116,12 @@ export default async function AdminOverviewPage() {
           href="/admin/sitters?status=approved"
         />
         <StatCard label="Total bookings" value={data.totalBookings} />
+        <StatCard
+          label="New contact messages"
+          value={data.newContactRequests}
+          href="/admin/contact"
+          accent={data.newContactRequests > 0}
+        />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">

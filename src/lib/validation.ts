@@ -69,6 +69,29 @@ export const sitterApplicationSchema = z.object({
 export type SitterApplicationInput = z.infer<typeof sitterApplicationSchema>;
 
 // ---------------------------------------------------------------------------
+// Contact / help request (/contact)
+// At least one of email or phone is required so the admin can reply.
+// ---------------------------------------------------------------------------
+export const contactSchema = z
+  .object({
+    name: requiredKey("fullName_required"),
+    email: z.string().trim().email("email_invalid").optional().or(z.literal("")),
+    phone: z.string().trim().optional().or(z.literal("")),
+    message: requiredKey("message_required"),
+  })
+  .superRefine((data, ctx) => {
+    if (!data.email && !data.phone) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["email"],
+        message: "contact_need_email_or_phone",
+      });
+    }
+  });
+
+export type ContactInput = z.infer<typeof contactSchema>;
+
+// ---------------------------------------------------------------------------
 // Admin: add review (/admin/reviews)
 // ---------------------------------------------------------------------------
 export const reviewSchema = z.object({

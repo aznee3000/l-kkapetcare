@@ -147,3 +147,15 @@ export interface Message {
   created_at: string;
   read_at: string | null;
 }
+
+export type ContactStatus = "new" | "resolved";
+
+export interface ContactRequest {
+  id: string;
+  name: string | null;
+  email: string | null;
+  phone: string | null;
+  message: string;
+  status: ContactStatus;
+  created_at: string;
+}
