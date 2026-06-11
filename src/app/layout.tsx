@@ -3,6 +3,7 @@ import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import { getTranslations } from "@/lib/i18n";
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
+import { Analytics } from "@vercel/analytics/next";
 
 const sans = Nunito_Sans({
   subsets: ["latin"],
@@ -29,6 +30,7 @@ export default async function RootLayout({
         <I18nProvider locale={locale} dict={t}>
           {children}
         </I18nProvider>
+        <Analytics />
       </body>
     </html>
   );
