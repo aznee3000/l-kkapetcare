@@ -1,9 +1,11 @@
+import { redirect } from "next/navigation";
 import { requireUser, getOwnSitterProfile, getCurrentProfile } from "@/lib/auth";
 import { getTranslations } from "@/lib/i18n";
 import DashboardNav from "@/components/dashboard/DashboardNav";
 
 // Guards the whole /dashboard route group. Buyers and sitters both land here;
-// the nav adapts based on whether the user owns a sitter profile.
+// the nav adapts based on whether the user owns a sitter profile. Admins are
+// kept separate — they manage everything from /admin.
 export default async function DashboardLayout({
   children,
 }: {
@@ -15,6 +17,8 @@ export default async function DashboardLayout({
     getOwnSitterProfile(),
     getTranslations(),
   ]);
+
+  if (profile?.role === "admin") redirect("/admin");
 
   return (
     <div className="min-h-screen bg-gray-50 md:flex">

@@ -73,6 +73,15 @@ export async function claimByEmail(user: User): Promise<void> {
 
   const admin = createAdminClient();
 
+  // Keep admin accounts entirely separate from buyer/sitter data: never link
+  // bookings/sitter profiles to them, and never touch their role.
+  const { data: profile } = await admin
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+  if (profile?.role === "admin") return;
+
   // Link unclaimed bookings made with this email.
   await admin
     .from("booking_requests")
@@ -89,6 +98,11 @@ export async function claimByEmail(user: User): Promise<void> {
     .select("id");
 
   if (linkedSitters && linkedSitters.length > 0) {
-    await admin.from("profiles").update({ role: "sitter" }).eq("id", user.id);
+    // Only ever promote a buyer to sitter — never overwrite another role.
+    await admin
+      .from("profiles")
+      .update({ role: "sitter" })
+      .eq("id", user.id)
+      .eq("role", "buyer");
   }
 }
