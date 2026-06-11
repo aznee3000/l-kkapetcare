@@ -5,7 +5,7 @@ import SitterCard from "@/components/SitterCard";
 import { LinkButton } from "@/components/ui/Button";
 import { createClient } from "@/lib/supabase/server";
 import { getTranslations } from "@/lib/i18n";
-import type { SitterProfile } from "@/lib/types";
+import type { SitterAvailability, SitterProfile } from "@/lib/types";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getTranslations();
@@ -26,6 +26,21 @@ export default async function SittersPage() {
     .order("average_rating", { ascending: false, nullsFirst: false });
 
   const sitters = (data as SitterProfile[] | null) ?? [];
+
+  // Fetch weekly availability for the listed sitters and group by sitter.
+  const availabilityBySitter: Record<string, SitterAvailability[]> = {};
+  if (sitters.length > 0) {
+    const { data: availData } = await supabase
+      .from("sitter_availability")
+      .select("*")
+      .in(
+        "sitter_id",
+        sitters.map((s) => s.id),
+      );
+    for (const slot of (availData as SitterAvailability[] | null) ?? []) {
+      (availabilityBySitter[slot.sitter_id] ??= []).push(slot);
+    }
+  }
 
   return (
     <>
@@ -65,7 +80,12 @@ export default async function SittersPage() {
           {sitters.length > 0 && (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {sitters.map((sitter) => (
-                <SitterCard key={sitter.id} sitter={sitter} t={t} />
+                <SitterCard
+                  key={sitter.id}
+                  sitter={sitter}
+                  t={t}
+                  availability={availabilityBySitter[sitter.id] ?? []}
+                />
               ))}
             </div>
           )}

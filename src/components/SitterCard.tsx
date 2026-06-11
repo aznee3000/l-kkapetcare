@@ -2,22 +2,35 @@ import Image from "next/image";
 import { Badge, VerifiedBadge } from "./ui/Badge";
 import { LinkButton } from "./ui/Button";
 import { SITTER_BADGES } from "@/lib/constants";
-import type { ServiceType, SitterProfile } from "@/lib/types";
+import type {
+  ServiceType,
+  SitterAvailability,
+  SitterProfile,
+} from "@/lib/types";
 import type { Dictionary } from "@/lib/i18n";
 
 function firstName(fullName: string) {
   return fullName.split(" ")[0];
 }
 
+// Mon→Sun ordering for the availability summary, keeping 0..6 (Sun..Sat) values.
+const WEEKDAY_ORDER = [1, 2, 3, 4, 5, 6, 0];
+
 export default function SitterCard({
   sitter,
   t,
+  availability = [],
 }: {
   sitter: SitterProfile;
   t: Dictionary;
+  availability?: SitterAvailability[];
 }) {
   const earnedBadges = SITTER_BADGES.filter((b) => sitter[b.key]);
   const tags = t.options.tags as Record<string, string>;
+
+  const availableDays = WEEKDAY_ORDER.filter((w) =>
+    availability.some((a) => a.weekday === w),
+  ).map((w) => t.weekdays[String(w) as keyof typeof t.weekdays].slice(0, 3));
 
   // Self-described tags that map to friendly "type of sitter" badges.
   const lifestyleBadges = sitter.tags.filter((tag) =>
@@ -84,6 +97,15 @@ export default function SitterCard({
               </Badge>
             ))}
           </div>
+        )}
+
+        {availableDays.length > 0 && (
+          <p className="mt-3 text-xs text-gray-500">
+            <span className="font-medium text-gray-700">
+              {t.sitterCard.availableLabel}:
+            </span>{" "}
+            {availableDays.join(", ")}
+          </p>
         )}
 
         <div className="mt-4 flex items-center justify-between text-sm text-gray-600">

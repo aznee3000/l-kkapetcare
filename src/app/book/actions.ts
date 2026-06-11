@@ -1,6 +1,7 @@
 "use server";
 
 import { createAdminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 import { bookingSchema } from "@/lib/validation";
 import { type FormState, zodErrorsToState } from "@/lib/form-state";
 import { getTranslations } from "@/lib/i18n";
@@ -47,6 +48,15 @@ export async function submitBooking(
 
   const data = parsed.data;
 
+  // If the buyer is signed in, link the booking to their account so it shows up
+  // in their dashboard. Anonymous bookings keep user_id null.
+  let userId: string | null = null;
+  const auth = await createClient();
+  const {
+    data: { user },
+  } = await auth.auth.getUser();
+  if (user) userId = user.id;
+
   try {
     const supabase = createAdminClient();
 
@@ -74,6 +84,7 @@ export async function submitBooking(
     const { error: bookingError } = await supabase
       .from("booking_requests")
       .insert({
+        user_id: userId,
         buyer_name: data.buyer_name,
         buyer_email: data.buyer_email,
         buyer_phone: data.buyer_phone,

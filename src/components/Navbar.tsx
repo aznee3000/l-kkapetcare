@@ -1,9 +1,17 @@
 import Link from "next/link";
 import { getTranslations } from "@/lib/i18n";
+import { createClient } from "@/lib/supabase/server";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 export default async function Navbar() {
   const { t } = await getTranslations();
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const accountHref = user ? "/dashboard" : "/login";
+  const accountLabel = user ? t.nav.dashboard : t.nav.signIn;
 
   return (
     <header className="sticky top-0 z-30 border-b border-brand-100 bg-[var(--background)]/90 backdrop-blur">
@@ -29,6 +37,12 @@ export default async function Navbar() {
             {t.nav.becomeSitter}
           </Link>
           <Link
+            href={accountHref}
+            className="text-sm font-medium text-gray-700 hover:text-brand-700"
+          >
+            {accountLabel}
+          </Link>
+          <Link
             href="/book"
             className="rounded-full bg-brand-600 px-5 py-2 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-700"
           >
@@ -40,6 +54,12 @@ export default async function Navbar() {
         {/* On small screens, show the language toggle and the primary CTA. */}
         <div className="flex items-center gap-3 md:hidden">
           <LanguageSwitcher />
+          <Link
+            href={accountHref}
+            className="text-sm font-medium text-gray-700 hover:text-brand-700"
+          >
+            {accountLabel}
+          </Link>
           <Link
             href="/book"
             className="rounded-full bg-brand-600 px-4 py-2 text-sm font-semibold text-white"

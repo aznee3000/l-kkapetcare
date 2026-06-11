@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { getTranslations } from "@/lib/i18n";
-import LoginForm from "@/components/auth/LoginForm";
+import SignupForm from "@/components/auth/SignupForm";
 
-export default async function LoginPage({
+export default async function SignupPage({
   searchParams,
 }: {
-  searchParams: Promise<{ next?: string; error?: string }>;
+  searchParams: Promise<{ next?: string }>;
 }) {
   const { t } = await getTranslations();
-  const { next, error } = await searchParams;
+  const { next } = await searchParams;
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-brand-50/50 px-4 py-12">
@@ -25,25 +25,26 @@ export default async function LoginPage({
 
         <div className="rounded-2xl border border-brand-100 bg-white p-8 shadow-soft">
           <h1 className="text-2xl font-bold text-gray-900">
-            {t.auth.signInTitle}
+            {t.auth.signUpTitle}
           </h1>
-          <p className="mt-1 text-sm text-gray-500">{t.auth.signInSubtitle}</p>
+          <p className="mt-1 text-sm text-gray-500">{t.auth.signUpSubtitle}</p>
 
-          <LoginForm
-            next={next}
-            initialError={error === "not_admin" ? t.auth.notAdmin : undefined}
-          />
+          <SignupForm next={next} />
 
           <p className="mt-6 text-center text-sm text-gray-500">
-            {t.auth.noAccount}{" "}
+            {t.auth.haveAccount}{" "}
             <Link
-              href={next ? `/signup?next=${encodeURIComponent(next)}` : "/signup"}
+              href={next ? `/login?next=${encodeURIComponent(next)}` : "/login"}
               className="font-semibold text-brand-700 hover:underline"
             >
-              {t.auth.signUpLink}
+              {t.auth.signInLink}
             </Link>
           </p>
         </div>
+
+        <p className="mt-6 text-center text-xs text-gray-500">
+          {t.auth.optionalNote}
+        </p>
       </div>
     </main>
   );

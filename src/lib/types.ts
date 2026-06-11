@@ -81,6 +81,7 @@ export interface Pet {
 
 export interface BookingRequest {
   id: string;
+  user_id: string | null;
   buyer_name: string;
   buyer_email: string;
   buyer_phone: string | null;
@@ -127,4 +128,22 @@ export interface Review {
   text: string | null;
   published: boolean;
   created_at: string;
+}
+
+export interface SitterAvailability {
+  id: string;
+  sitter_id: string;
+  weekday: number; // 0 = Sunday ... 6 = Saturday
+  start_time: string; // "HH:MM" / "HH:MM:SS"
+  end_time: string;
+  created_at: string;
+}
+
+export interface Message {
+  id: string;
+  booking_id: string;
+  sender_id: string | null;
+  body: string;
+  created_at: string;
+  read_at: string | null;
 }

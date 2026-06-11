@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { BookingStatusBadge } from "@/components/admin/StatusBadge";
+import ActivityTimeline from "@/components/dashboard/ActivityTimeline";
+import BookingChat from "@/components/dashboard/BookingChat";
 import { Button } from "@/components/ui/Button";
 import { Input, Select, Textarea } from "@/components/ui/Input";
 import {
@@ -148,28 +150,14 @@ export default async function BookingDetailPage({
             <Row label="Vet info" value={booking.vet_info} />
           </div>
 
-          {/* Timeline (also feeds future photo updates / GPS) */}
+          {/* Timeline — includes sitter photo updates posted from their dashboard. */}
           <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-soft">
             <h2 className="mb-3 font-semibold text-gray-900">Activity</h2>
-            {updates.length === 0 ? (
-              <p className="text-sm text-gray-500">No activity yet.</p>
-            ) : (
-              <ul className="space-y-3">
-                {updates.map((u) => (
-                  <li key={u.id} className="flex gap-3 text-sm">
-                    <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-brand-400" />
-                    <div>
-                      <p className="text-gray-800">{u.message}</p>
-                      <p className="text-xs text-gray-400">
-                        {new Date(u.created_at).toLocaleString("en-GB")}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-            {/* FUTURE: sitters post photo_update rows here from their dashboard. */}
+            <ActivityTimeline updates={updates} emptyLabel="No activity yet." />
           </div>
+
+          {/* In-app messaging with the booking's buyer and sitter. */}
+          <BookingChat bookingId={booking.id} />
         </div>
 
         {/* Right: actions */}
