@@ -30,11 +30,25 @@ export default async function AvailabilityPage() {
           {t.dashboard.becomeSitterPrompt}
         </p>
         <Link
-          href="/become-sitter"
+          href="/dashboard/become-sitter"
           className="mt-4 inline-flex rounded-full bg-brand-600 px-5 py-2 text-sm font-semibold text-white hover:bg-brand-700"
         >
           {t.dashboard.becomeSitterCta}
         </Link>
+      </div>
+    );
+  }
+
+  if (sitter.status !== "approved") {
+    const pending = sitter.status === "pending_review";
+    return (
+      <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-soft">
+        <h1 className="text-xl font-bold text-gray-900">
+          {pending ? t.dashboard.pendingTitle : t.dashboard.inactiveTitle}
+        </h1>
+        <p className="mx-auto mt-2 max-w-md text-sm text-gray-600">
+          {pending ? t.dashboard.pendingBody : t.dashboard.inactiveBody}
+        </p>
       </div>
     );
   }

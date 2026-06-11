@@ -1,6 +1,8 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 import { sitterApplicationSchema } from "@/lib/validation";
 import { type FormState, zodErrorsToState } from "@/lib/form-state";
 import { getTranslations } from "@/lib/i18n";
@@ -43,6 +45,15 @@ export async function submitSitterApplication(
 
   const data = parsed.data;
 
+  // If the applicant is signed in, link the sitter profile to their account so
+  // it appears in their dashboard immediately (no email-match needed).
+  let userId: string | null = null;
+  const auth = await createClient();
+  const {
+    data: { user },
+  } = await auth.auth.getUser();
+  if (user) userId = user.id;
+
   try {
     const supabase = createAdminClient();
 
@@ -74,6 +85,7 @@ export async function submitSitterApplication(
 
     // Append references into availability/bio context for admin review.
     const { error } = await supabase.from("sitter_profiles").insert({
+      user_id: userId,
       full_name: data.full_name,
       email: data.email,
       phone: data.phone,
@@ -91,6 +103,8 @@ export async function submitSitterApplication(
     });
 
     if (error) throw error;
+
+    if (userId) revalidatePath("/dashboard");
 
     return { ok: true, message: t.sitter.successMessage };
   } catch (err) {

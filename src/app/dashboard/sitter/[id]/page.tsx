@@ -31,7 +31,7 @@ export default async function SitterAssignmentDetail({
   const { id } = await params;
   const { t, locale } = await getTranslations();
   const sitter = await getOwnSitterProfile();
-  if (!sitter) notFound();
+  if (!sitter || sitter.status !== "approved") notFound();
 
   const supabase = await createClient();
   const { data: bookingData } = await supabase

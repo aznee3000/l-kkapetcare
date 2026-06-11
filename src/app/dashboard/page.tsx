@@ -30,7 +30,7 @@ export default async function DashboardOverview() {
         {t.dashboard.myBookings}
       </h1>
 
-      {sitter && (
+      {sitter?.status === "approved" && (
         <Link
           href="/dashboard/sitter"
           className="flex items-center justify-between rounded-2xl border border-brand-200 bg-brand-50 p-4 text-sm font-medium text-brand-800 hover:bg-brand-100"
@@ -39,6 +39,30 @@ export default async function DashboardOverview() {
           <span aria-hidden>→</span>
         </Link>
       )}
+
+      {sitter?.status === "pending_review" && (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4">
+          <p className="text-sm font-semibold text-amber-800">
+            {t.dashboard.pendingTitle}
+          </p>
+          <p className="mt-1 text-sm text-amber-700">
+            {t.dashboard.pendingBody}
+          </p>
+        </div>
+      )}
+
+      {sitter &&
+        sitter.status !== "approved" &&
+        sitter.status !== "pending_review" && (
+          <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+            <p className="text-sm font-semibold text-gray-800">
+              {t.dashboard.inactiveTitle}
+            </p>
+            <p className="mt-1 text-sm text-gray-600">
+              {t.dashboard.inactiveBody}
+            </p>
+          </div>
+        )}
 
       {bookings.length === 0 ? (
         <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-soft">
@@ -83,7 +107,7 @@ export default async function DashboardOverview() {
         <div className="rounded-2xl border border-dashed border-gray-300 bg-white p-5 text-center text-sm text-gray-600">
           <p>{t.dashboard.becomeSitterPrompt}</p>
           <Link
-            href="/become-sitter"
+            href="/dashboard/become-sitter"
             className="mt-2 inline-flex font-semibold text-brand-700 hover:underline"
           >
             {t.dashboard.becomeSitterCta}

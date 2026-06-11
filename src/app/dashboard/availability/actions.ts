@@ -8,7 +8,7 @@ import { getOwnSitterProfile } from "@/lib/auth";
 // the slot is always tied to the caller's own sitter profile.
 export async function addSlot(formData: FormData) {
   const sitter = await getOwnSitterProfile();
-  if (!sitter) return;
+  if (!sitter || sitter.status !== "approved") return;
 
   const weekday = Number(formData.get("weekday"));
   const start = String(formData.get("start_time") ?? "");
@@ -39,7 +39,7 @@ export async function addSlot(formData: FormData) {
 // Removes one of the current sitter's slots (verified against their profile).
 export async function removeSlot(formData: FormData) {
   const sitter = await getOwnSitterProfile();
-  if (!sitter) return;
+  if (!sitter || sitter.status !== "approved") return;
 
   const slotId = String(formData.get("slot_id") ?? "");
   if (!slotId) return;

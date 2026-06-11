@@ -26,7 +26,11 @@ function SubmitButton({ idle, busy }: { idle: string; busy: string }) {
   );
 }
 
-export default function SitterForm() {
+export default function SitterForm({
+  defaults,
+}: {
+  defaults?: { fullName?: string; email?: string };
+}) {
   const { t } = useI18n();
   const ts = t.sitter;
   const [state, formAction] = useActionState(
@@ -71,10 +75,21 @@ export default function SitterForm() {
         </h3>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label={ts.fullName} htmlFor="full_name" required error={err("full_name")} optionalLabel={opt}>
-            <Input id="full_name" name="full_name" autoComplete="name" />
+            <Input
+              id="full_name"
+              name="full_name"
+              autoComplete="name"
+              defaultValue={defaults?.fullName}
+            />
           </Field>
           <Field label={ts.email} htmlFor="email" required error={err("email")} optionalLabel={opt}>
-            <Input id="email" name="email" type="email" autoComplete="email" />
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              defaultValue={defaults?.email}
+            />
           </Field>
           <Field label={ts.phone} htmlFor="phone" required error={err("phone")} optionalLabel={opt}>
             <Input id="phone" name="phone" type="tel" autoComplete="tel" />

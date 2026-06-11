@@ -20,7 +20,7 @@ export default async function DashboardLayout({
     <div className="min-h-screen bg-gray-50 md:flex">
       <DashboardNav
         email={profile?.email ?? user.email ?? null}
-        isSitter={Boolean(sitter)}
+        isSitter={sitter?.status === "approved"}
         labels={{
           title: t.dashboard.title,
           overview: t.dashboard.overview,

@@ -300,6 +300,12 @@ export const en = {
     becomeSitterPrompt:
       "Want to sit too? Apply to become a sitter and we'll review your profile.",
     becomeSitterCta: "Become a sitter",
+    pendingTitle: "Application under review",
+    pendingBody:
+      "Thanks for applying to be a sitter! We're reviewing your profile and will be in touch. Your sitter tools unlock once you're approved.",
+    inactiveTitle: "Sitter profile not active",
+    inactiveBody:
+      "Your sitter profile isn't currently active. Contact us if you think this is a mistake.",
     statusLabel: "Status",
     serviceLabel: "Service",
     dateLabel: "Date",

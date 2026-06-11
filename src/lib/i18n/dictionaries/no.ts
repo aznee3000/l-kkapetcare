@@ -305,6 +305,12 @@ export const no: Dictionary = {
     becomeSitterPrompt:
       "Vil du passe dyr du også? Søk om å bli passer, så vurderer vi profilen din.",
     becomeSitterCta: "Bli passer",
+    pendingTitle: "Søknaden er til vurdering",
+    pendingBody:
+      "Takk for at du søkte om å bli passer! Vi vurderer profilen din og tar kontakt. Passerverktøyene låses opp når du er godkjent.",
+    inactiveTitle: "Passerprofil ikke aktiv",
+    inactiveBody:
+      "Passerprofilen din er ikke aktiv akkurat nå. Ta kontakt hvis du tror dette er en feil.",
     statusLabel: "Status",
     serviceLabel: "Tjeneste",
     dateLabel: "Dato",
