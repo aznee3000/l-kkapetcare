@@ -4,6 +4,7 @@ import "./globals.css";
 import { getTranslations } from "@/lib/i18n";
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const sans = Nunito_Sans({
   subsets: ["latin"],
@@ -31,6 +32,7 @@ export default async function RootLayout({
           {children}
         </I18nProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
